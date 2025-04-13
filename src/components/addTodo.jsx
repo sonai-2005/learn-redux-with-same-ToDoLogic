@@ -11,7 +11,12 @@ function AddTodo() {
         Dispatch(addTodo(input))
         setinput('');
     }
-
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+       event.preventDefault();
+       addTodoHandler(event);
+      }
+    };
   return (
    <form onSubmit={addTodoHandler} className="space-x-3 mt-12">
       <input
@@ -23,6 +28,7 @@ function AddTodo() {
       />
       <button
         type="submit"
+        onKeyDown={handleKeyDown}
         className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
       >
         Add Todo
