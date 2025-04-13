@@ -1,25 +1,42 @@
-import { createSlice , nanoid } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
+const loadTodosFromLocalStorage = () => {
+    const todos = localStorage.getItem('todos');
+    return todos ? JSON.parse(todos) : []; // if there's no todos in localStorage, return an empty array
+};
 
 const initialState = {
-    todos:[{id:1 , text:'hello world'}]
-}
+    todos: loadTodosFromLocalStorage(),
+};
+
 export const todoSlice = createSlice({
-    name:'todo',
+    name: 'todo',
     initialState,
-    reducers:{
-        addTodo:(state,action)=>{
-            const todo ={
-                id:nanoid() , 
-                text:action.payload 
+    reducers: {
+        addTodo: (state, action) => {
+            if (action.payload.trim().length < 1){ console.log("empty string ::");
+            alert("u are giving empty string");
+            }
+            else{
+            const todo = {
+                id: nanoid(),
+                text: action.payload,
+
             }
             state.todos.push(todo);//general thing for all ...like api call or something....
-        },  
-        removeTodo:(state , action)=>{
-            state.todos = state.todos.filter((todo)=>
-                todo.id!==action.payload);
+            saveTodosToLocalStorage(state.todos)
+        }
         },
-        
+        removeTodo: (state, action) => { 
+                state.todos = state.todos.filter((todo) =>
+                    todo.id !== action.payload);
+                saveTodosToLocalStorage(state.todos);
+            
+        },
+
     }
-})
-export const{addTodo , removeTodo} = todoSlice.actions
+});
+const saveTodosToLocalStorage = (todos) => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+};
+export const { addTodo, removeTodo } = todoSlice.actions
 export default todoSlice.reducer;
