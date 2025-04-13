@@ -9,7 +9,7 @@ a basic todo website (just for learn how redux works with a store and a slicer )
 
 1. Clone the repo
 ```bash
-git clone https://sonai-2005.github.io/learn-redux-with-same-ToDoLogic/
+ git clone https://github.com/sonai-2005/learn-redux-with-same-ToDoLogic.git
 cd learn-redux-with-same-ToDoLogic
 npm install
 vite --host or npm run dev
